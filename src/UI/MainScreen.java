@@ -5,12 +5,12 @@ import Business.BusinessClass;
 import javax.swing.*;
 
 public class MainScreen {
-    private static JFrame RoundFrame;
+    private static JFrame RoundOneFrame;
     private static JFrame MainFrame;
 
     public static void main(String[] args) {
         MainFrame = BusinessClass.SetBackGroundPanel();
-        RoundFrame = RoundScreen.SetRoundsThemes();
+        RoundOneFrame = RoundScreen.SetFirstRoundButtons();
 
         SetButtons();
         MainFrame.setVisible(true);
@@ -29,7 +29,7 @@ public class MainScreen {
 
         JButton btnFirstRound = BusinessClass.SetButtons(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Round1.png"),
                 MainFrame.getWidth() / 2 - 325,85,650,150);
-        btnFirstRound.addActionListener(e -> ShowRound(RoundFrame));
+        btnFirstRound.addActionListener(e -> ShowRound(RoundOneFrame));
 
         MainFrame.add(btnFirstRound);
     }

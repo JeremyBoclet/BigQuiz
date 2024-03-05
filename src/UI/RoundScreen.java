@@ -43,7 +43,7 @@ public class RoundScreen {
         frame.add(btnPlayer);
     }
 
-    public static JFrame SetRoundsThemes()
+    public static JFrame SetFirstRoundButtons()
     {
         frame = BusinessClass.SetBackGroundPanel();
 
