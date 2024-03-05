@@ -4,17 +4,12 @@ import Business.BusinessClass;
 import Models.Players;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerScreen {
     private static JFrame PlayerFrame;
-    public static List<Players> p;
+    private static String SelectedPlayer;
 
-    public static List<Players> getPlayers()
-    {
-        return p;
-    }
     public static void main(String[] args) {
     }
 
@@ -22,18 +17,24 @@ public class PlayerScreen {
         return PlayerFrame;
     }
 
+    /*public static String GetSelectedPlayer()
+    {
+        return SelectedPlayer;
+    }*/
+
     public static void AddPlayers()
     {
         PlayerFrame = BusinessClass.SetBackGroundPanel();
-
-
         List<Players> Players = BusinessClass.GetPlayers();
-        p = Players;
-        int x = PlayerFrame.getWidth() / 2 - 610,y=200;
+        int x = PlayerFrame.getWidth() / 2 - 610, y=200;
 
         for (Players player:Players){
             JButton button = BusinessClass.SetButtons(String.format(String.format(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Player/%s.png"),player.GetPlayerName())),x,y,600,150);
 
+            button.addActionListener(e -> {
+                SelectedPlayer = player.GetPlayerName();
+                PlayerFrame.setVisible(false);
+            });
 
             y += 150;
             if (y >= 901)
