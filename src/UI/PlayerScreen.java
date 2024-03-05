@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PlayerScreen {
     private static JFrame PlayerFrame;
-    private static String SelectedPlayer;
+    private static Players SelectedPlayer;
 
     public static void main(String[] args) {
     }
@@ -17,22 +17,25 @@ public class PlayerScreen {
         return PlayerFrame;
     }
 
-    /*public static String GetSelectedPlayer()
+    public static Players GetSelectedPlayer()
     {
         return SelectedPlayer;
-    }*/
+    }
 
+    //Ajout des joueurs à l'écran
     public static void AddPlayers()
     {
         PlayerFrame = BusinessClass.SetBackGroundPanel();
         List<Players> Players = BusinessClass.GetPlayers();
-        int x = PlayerFrame.getWidth() / 2 - 610, y=200;
+        int x = PlayerFrame.getWidth() / 2 - 610, y= 200;
 
         for (Players player:Players){
-            JButton button = BusinessClass.SetButtons(String.format(String.format(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Player/%s.png"),player.GetPlayerName())),x,y,600,150);
+            JButton button = BusinessClass.SetButtons(String.format(String.format(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Player/%s.png"),player.GetPlayerName())),
+                    x,y,600,150);
 
             button.addActionListener(e -> {
-                SelectedPlayer = player.GetPlayerName();
+                SelectedPlayer = player;
+                RoundScreen.ChangePlayer();
                 PlayerFrame.setVisible(false);
             });
 
