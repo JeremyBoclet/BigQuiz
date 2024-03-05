@@ -8,8 +8,6 @@ import javax.swing.*;
 public class RoundScreen {
     private static JButton btnPlayer;
     private static JFrame frame;
-    public static void main(String[] args) {
-    }
 
     public static void SetPlayers()
     {

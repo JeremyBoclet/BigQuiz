@@ -10,9 +10,6 @@ public class PlayerScreen {
     private static JFrame PlayerFrame;
     private static Players SelectedPlayer;
 
-    public static void main(String[] args) {
-    }
-
     public static JFrame getPlayerFrame() {
         return PlayerFrame;
     }
@@ -27,7 +24,7 @@ public class PlayerScreen {
     {
         PlayerFrame = BusinessClass.SetBackGroundPanel();
         List<Players> Players = BusinessClass.GetPlayers();
-        int x = PlayerFrame.getWidth() / 2 - 610, y= 200;
+        int x = PlayerFrame.getWidth() / 2 - 610, y= 100;
 
         for (Players player:Players){
             JButton button = BusinessClass.SetButtons(String.format(String.format(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Player/%s.png"),player.GetPlayerName())),
@@ -43,7 +40,7 @@ public class PlayerScreen {
             if (y >= 901)
             {
                 x = PlayerFrame.getWidth() / 2 + 10;
-                y = 200;
+                y = 100;
             }
 
             PlayerFrame.add(button);
