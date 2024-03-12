@@ -22,12 +22,12 @@ public class MainScreen {
     private static void SetButtons()
     {
 
-        JButton btnQuit = BusinessClass.SetButtons(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Quit.png"),10,
+        JButton btnQuit = BusinessClass.SetButtons("Quit.png",10,
                 MainFrame.getHeight() - 60,200,60);
         btnQuit.addActionListener(e -> MainFrame.dispose());
         MainFrame.add(btnQuit);
 
-        JButton btnFirstRound = BusinessClass.SetButtons(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Round1.png"),
+        JButton btnFirstRound = BusinessClass.SetButtons("Round1.png",
                 MainFrame.getWidth() / 2 - 325,85,650,150);
         btnFirstRound.addActionListener(e -> ShowRound(RoundOneFrame));
 

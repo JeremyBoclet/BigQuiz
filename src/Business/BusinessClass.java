@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BusinessClass {
 
-    public static String AbsoluteFilePath = new File("").getAbsolutePath();
+    public static String AbsoluteFilePath = new File("").getAbsolutePath().concat("/src/Assets/");
 
     public static JButton SetButtons(String pImagePath, int pPosX, int pPosY,int pWidth, int pHeight)
     {
@@ -18,7 +18,7 @@ public class BusinessClass {
         {
             JButton myButton = new JButton();
             myButton.setBounds(pPosX,pPosY,pWidth,pHeight);
-            ImageIcon icon = new ImageIcon(pImagePath);
+            ImageIcon icon = new ImageIcon(AbsoluteFilePath.concat(pImagePath));
             Image image = icon.getImage().getScaledInstance(pWidth, pHeight,  java.awt.Image.SCALE_SMOOTH);
 
             myButton.setOpaque(false);
@@ -40,7 +40,7 @@ public class BusinessClass {
     {
         JFrame frame = new javax.swing.JFrame("Choose theme");
 
-        ImageIcon icon = new ImageIcon(AbsoluteFilePath.concat("/src/Assets/Background.jpg"));
+        ImageIcon icon = new ImageIcon(AbsoluteFilePath.concat("Background.jpg"));
         JLabel background = new JLabel();
         background.setIcon(icon);
 

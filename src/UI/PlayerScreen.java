@@ -27,7 +27,7 @@ public class PlayerScreen {
         int x = PlayerFrame.getWidth() / 2 - 610, y= 100;
 
         for (Players player:Players){
-            JButton button = BusinessClass.SetButtons(String.format(String.format(BusinessClass.AbsoluteFilePath.concat("/src/Assets/Player/%s.png"),player.GetPlayerName())),
+            JButton button = BusinessClass.SetButtons(String.format("Player/%s.png",player.GetPlayerName()),
                     x,y,600,150);
 
             button.addActionListener(e -> {

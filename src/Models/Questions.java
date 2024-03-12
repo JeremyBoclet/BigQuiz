@@ -12,15 +12,18 @@ public class Questions {
 
     }
 
+    public String GetQuestion()
+    {
+        return Question;
+    }
+
     public void SetQuestion(String pValue)
     {
         Question=pValue;
-
     }
     public void SetAnswer(String pValue)
     {
         Answer=pValue;
-
     }
     public void SetExternalName(String pValue)
     {
