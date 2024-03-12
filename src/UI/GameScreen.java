@@ -7,7 +7,6 @@ import Models.Questions;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +14,7 @@ public class GameScreen {
     private List<Questions> questions;
     private JFrame quizFrame = BusinessClass.SetBackGroundPanel();
     private List<Integer> questionIds;
+    private JLabel questionLabel;
 
     private void SetQuestion(List<Questions> pValue){
         questions = pValue;
@@ -33,15 +33,12 @@ public class GameScreen {
 
     public void GetQuestion(String pTheme) throws Exception {
         questionIds = new ArrayList<>();
-        int i=0;
 
         SetQuestion(DataClass.GetQuestion(pTheme));
 
-        for (Questions question:questions)
-        {
+        for (int i=0; i<=questions.size()-1;i++)
             questionIds.add(i);
-            i+=1;
-        }
+
         //Permet un ordre aléatoire des questions
         Collections.shuffle(questionIds);
 
@@ -49,12 +46,20 @@ public class GameScreen {
 
     private void ChangeQuestion()
     {
-        JLabel questionLabel = new JLabel(questions.get(GetNextQuestionId()).GetQuestion(),SwingConstants.CENTER);
+        try
+        {
+            quizFrame.remove(questionLabel);
+        }
+        catch(Exception ex)  {
+
+        }
+        questionLabel = new JLabel(questions.get(GetNextQuestionId()).GetQuestion(),SwingConstants.CENTER);
         questionLabel.setFont(new Font("Verdana",Font.PLAIN,24));
         questionLabel.setForeground(Color.WHITE);
         questionLabel.setBounds(0,0,2000,quizFrame.getHeight()/2);
         quizFrame.add(questionLabel);
         quizFrame.revalidate();
+        quizFrame.repaint();
     }
 
     private void SetButtons()
