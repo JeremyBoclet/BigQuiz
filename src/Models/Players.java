@@ -22,6 +22,10 @@ public class Players {
 
     public void SetPoint(int pPoint)
     {
+        Points = pPoint;
+    }
+    public void AddPoint(int pPoint)
+    {
         Points += pPoint;
     }
     public void SetName(String pName)
@@ -33,4 +37,5 @@ public class Players {
         Category = pCategory;
     }
     public String GetPlayerName() { return Name; }
+    public int GetPlayerPoints() { return Points; }
 }

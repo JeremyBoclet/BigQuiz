@@ -17,6 +17,8 @@ public class Questions {
         return Question;
     }
 
+    public String GetAnswer(){return Answer;}
+
     public void SetQuestion(String pValue)
     {
         Question=pValue;

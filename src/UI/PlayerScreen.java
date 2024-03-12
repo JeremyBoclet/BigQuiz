@@ -4,6 +4,7 @@ import Business.BusinessClass;
 import Models.Players;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class PlayerScreen {
@@ -19,7 +20,7 @@ public class PlayerScreen {
         return SelectedPlayer;
     }
 
-    //Ajout des joueurs à l'écran
+     //Ajout des joueurs à l'écran
     public static void AddPlayers()
     {
         PlayerFrame = BusinessClass.SetBackGroundPanel();

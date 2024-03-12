@@ -8,7 +8,7 @@ public class MainScreen {
     private static JFrame RoundOneFrame;
     private static JFrame MainFrame;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         MainFrame = BusinessClass.SetBackGroundPanel();
         RoundOneFrame = RoundScreen.SetFirstRoundButtons();
 
@@ -16,6 +16,12 @@ public class MainScreen {
         MainFrame.setVisible(true);
         MainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         RoundScreen.SetPlayers();
+
+        //To testing
+        /*GameScreen quizScreen = new GameScreen();
+        quizScreen.GetQuestion("BEN");
+        quizScreen.ShowScreen();*/
+
     }
 
     //Ajoute les boutons de l'écran d'accueil
