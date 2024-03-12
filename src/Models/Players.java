@@ -22,7 +22,7 @@ public class Players {
 
     public void SetPoint(int pPoint)
     {
-        Points = pPoint;
+        Points += pPoint;
     }
     public void SetName(String pName)
     {
