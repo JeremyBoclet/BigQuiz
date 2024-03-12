@@ -32,10 +32,5 @@ public class Players {
     {
         Category = pCategory;
     }
-    public String GetPlayerName()
-    {
-        return Name;
-    }
-
-
+    public String GetPlayerName() { return Name; }
 }

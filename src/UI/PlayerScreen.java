@@ -37,7 +37,7 @@ public class PlayerScreen {
             });
 
             y += 150;
-            if (y >= 901)
+            if (y >= 849)
             {
                 x = PlayerFrame.getWidth() / 2 + 10;
                 y = 100;
