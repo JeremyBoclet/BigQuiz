@@ -4,6 +4,7 @@ import Business.BusinessClass;
 import Models.Players;
 
 import javax.swing.*;
+import java.util.Locale;
 
 public class RoundScreen {
     private static JButton btnPlayer;
@@ -38,7 +39,11 @@ public class RoundScreen {
         btnPlayer = BusinessClass.SetButtons(String.format("Player/%s.png",PlayerName),
                 650,50,600,150);
 
-        btnPlayer.addActionListener(e -> PlayerScreen.getPlayerFrame().setVisible(true));
+        btnPlayer.addActionListener(e -> {
+            PlayerScreen.getPlayerFrame().setVisible(true);
+            //PlayerScreen.ShowPoint();
+
+        });
 
         frame.add(btnPlayer);
     }
@@ -47,29 +52,42 @@ public class RoundScreen {
     {
         frame = BusinessClass.SetBackGroundPanel();
 
-        JButton themeBen = BusinessClass.SetButtons("BEN.png",350,200,600,150);
-        themeBen.addActionListener(e -> {
-            try {
-                GameScreen quizScreen = new GameScreen();
-                quizScreen.GetQuestion("BEN");
-                quizScreen.ShowScreen();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+        int posx = 350;
+        int posy = 200;
+        int count = 0;
+
+        for(Players player:PlayerScreen.GetAllPlayers())
+        {
+            count+=1;
+
+            JButton theme = BusinessClass.SetButtons(player.GetPlayerName().toUpperCase().concat(".png"), posx, posy,
+                    600,150);
+            theme.addActionListener(e -> {
+                try {
+                    GameScreen quizScreen = new GameScreen();
+                    quizScreen.SetSelectedTheme(theme);
+                    quizScreen.GetQuestion(player.GetPlayerName().toUpperCase());
+                    quizScreen.ShowScreen();
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            frame.add(theme);
+
+            posy += 150;
+            if (count == 5)
+            {
+                posx = 1000;
+                posy = 200;
             }
-        });
-        frame.add(themeBen);
-        JButton themeMartin = BusinessClass.SetButtons("MARTIN.png",350,350,600,150);
-        frame.add(themeMartin);
-        JButton themeMathis = BusinessClass.SetButtons("MATHIS.png",350,500,600,150);
-        frame.add(themeMathis);
-        JButton themeRobin = BusinessClass.SetButtons("ROBIN.png",350,650,600,150);
-        frame.add(themeRobin);
-        JButton themePTF = BusinessClass.SetButtons("PTF.png",350,800,600,150);
-        frame.add(themePTF);
+        }
 
         JButton btnReturnToMain = BusinessClass.SetButtons("Round1.png",
                 1500,5,400,100);
-        btnReturnToMain.addActionListener(e -> frame.setVisible(false));
+        btnReturnToMain.addActionListener(e -> {
+            BusinessClass.SetPlayersPoints(PlayerScreen.GetAllPlayers());
+            frame.setVisible(false);
+        });
         frame.add(btnReturnToMain);
 
         ChangePlayer();

@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="guicedee.services.apache.poi.ooxml" type="repository">
+    <properties maven-id="com.guicedee.services:apache-poi-ooxml:62" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/apache-poi-ooxml-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-compress-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-xmlbeans-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache-poi-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-math3-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections4-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jakarta.xml.bind-api-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jakarta.activation-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jakarta.validation-api-62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stax2-api-4.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stax-ex-1.8.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

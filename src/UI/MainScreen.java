@@ -3,6 +3,7 @@ package UI;
 import Business.BusinessClass;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainScreen {
     private static JFrame RoundOneFrame;
@@ -10,12 +11,17 @@ public class MainScreen {
 
     public static void main(String[] args) throws Exception {
         MainFrame = BusinessClass.SetBackGroundPanel();
+        RoundScreen.SetPlayers();
         RoundOneFrame = RoundScreen.SetFirstRoundButtons();
 
         SetButtons();
         MainFrame.setVisible(true);
         MainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        RoundScreen.SetPlayers();
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+        // Obtenir les écrans disponibles
+        GraphicsDevice[] screens = ge.getScreenDevices();
 
         //To testing
         /*GameScreen quizScreen = new GameScreen();
@@ -30,7 +36,7 @@ public class MainScreen {
 
         JButton btnQuit = BusinessClass.SetButtons("Quit.png",10,
                 MainFrame.getHeight() - 60,200,60);
-        btnQuit.addActionListener(e -> MainFrame.dispose());
+        btnQuit.addActionListener(e -> System.exit(0));
         MainFrame.add(btnQuit);
 
         JButton btnFirstRound = BusinessClass.SetButtons("Round1.png",

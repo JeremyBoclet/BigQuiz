@@ -1,8 +1,6 @@
 package UI;
 
 import Business.BusinessClass;
-import Data.DataClass;
-import Models.Players;
 import Models.Questions;
 
 import javax.swing.*;
@@ -17,7 +15,10 @@ public class GameScreen {
     private List<Integer> questionIds;
     private JLabel questionLabel;
     private JLabel answerLabel;
+    private JLabel lblPoint;
     private String currentTheme="";
+
+    private JButton buttonPressed;
 
     private void SetQuestion(List<Questions> pValue){
         questions = pValue;
@@ -25,7 +26,10 @@ public class GameScreen {
 
     public static void main(String[] args) {
     }
-
+     public void SetSelectedTheme(JButton pButtonPressed)
+     {
+         buttonPressed = pButtonPressed;
+     }
     public void ShowScreen()
     {
         quizFrame = BusinessClass.SetBackGroundPanel();
@@ -39,7 +43,7 @@ public class GameScreen {
 
         questionIds = new ArrayList<>();
 
-        SetQuestion(DataClass.GetQuestion(pTheme));
+        SetQuestion(BusinessClass.GetQuestion(pTheme));
 
         for (int i=0; i<=questions.size()-1;i++)
             questionIds.add(i);
@@ -100,13 +104,17 @@ public class GameScreen {
         {
             hideAnswer.setVisible(true);
 
+            PlayerScreen.GetSelectedPlayer().AddPoint(1);
+            lblPoint.setText("Point : ".concat(String.valueOf(PlayerScreen.GetSelectedPlayer().GetPlayerPoints())));
+
             if(questionIds.isEmpty())
+            {
+                buttonPressed.setVisible(false);
                 quizFrame.dispose();
-            else {
-                PlayerScreen.GetSelectedPlayer().AddPoint(1);
-                System.out.println(Integer.toString(PlayerScreen.GetSelectedPlayer().GetPlayerPoints()));
-                ChangeQuestion();
             }
+            else
+                ChangeQuestion();
+
         });
         quizFrame.add(btnGoodAnswer);
 
@@ -118,12 +126,38 @@ public class GameScreen {
             hideAnswer.setVisible(true);
 
             if(questionIds.isEmpty())
+            {
+                buttonPressed.setVisible(false);
                 quizFrame.dispose();
+            }
             else {
                 ChangeQuestion();
             }
         });
         quizFrame.add(btnBadAnswer);
+
+        JButton btnCancel = BusinessClass.SetButtons("Cancel.png",
+                20,
+                quizFrame.getHeight() - 65,200,65);
+        btnCancel.addActionListener(e ->
+        {
+            quizFrame.dispose();
+        });
+        quizFrame.add(btnCancel);
+
+        lblPoint = new JLabel("Point : ".concat(String.valueOf(PlayerScreen.GetSelectedPlayer().GetPlayerPoints())));
+
+        lblPoint.setBounds(
+                0,
+                750,
+                quizFrame.getWidth(),
+                quizFrame.getHeight()/2
+
+        );
+        lblPoint.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        lblPoint.setFont(new Font("Verdana",Font.PLAIN,40));
+        lblPoint.setForeground(Color.WHITE);
+        quizFrame.add(lblPoint);
 
 
     }
