@@ -3,6 +3,8 @@ package UI;
 import Business.BusinessClass;
 import Models.Players;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import javax.swing.*;
 import java.util.List;
 
@@ -13,59 +15,39 @@ public class RoundTwoScreen {
     private final int PLAYER_THEME_WIDTH = 600;
     private final int PLAYER_THEME_HEIGHT= 150;
     private final int INITIAL_POS_Y = 200;
-
     private JButton btnPlayer;
+
     private JFrame frame;
 
-
-    public void SetPlayers(PlayerScreen playerScreen)
-    {
-        playerScreen.AddPlayers();
-    }
-
-
-
-    public void ChangePlayer()
-    {
-        try
-        {
-            //On supprime l'ancien joueur de l'écran pour ajouter celui sélectionné
-            frame.remove(btnPlayer);
-            frame.revalidate();
-            frame.repaint();
+    public static void main(String[] args) {
         }
-        catch(Exception ex)
-        {
-            //Le bouton n'existe pas (possible lors de la 1ere itération)
-        }
-
-        btnPlayer = new JButton();
-        Players player = PlayerScreen.GetSelectedPlayer();
-        String PlayerName = "Player";
-
-        if(player != null)
-            PlayerName = player.GetPlayerName();
-
-        btnPlayer = BusinessClass.SetButtons(String.format("Player/%s.png",PlayerName),
-                650,50,600,150);
-
-        btnPlayer.addActionListener(e -> {
-            PlayerScreen.UpdatePoints();
-            PlayerScreen.getPlayerFrame().setVisible(true);
-        });
-
-        frame.add(btnPlayer);
-    }
 
     public JFrame SetRoundButtons()
     {
+        PlayerScreen playerScreen = new PlayerScreen();
+        playerScreen.AddPlayers();
+
         frame = BusinessClass.SetBackGroundPanel();
+        frame.addWindowFocusListener(new WindowFocusListener() {
+                                             @Override
+                                             public void windowGainedFocus(WindowEvent e) {
+                                                 //Permet de recupérer les bons points
+                                                 playerScreen.AddPlayers();
+                                                 //Met le bon joueur en avant
+                                                 SetPlayer(frame,playerScreen);
+                                                 frame.revalidate();
+                                                 frame.repaint();
+                                             }
+
+                                             @Override
+                                             public void windowLostFocus(WindowEvent e) {
+                                             }});
 
         int posx = 350;
         int posy = INITIAL_POS_Y;
         int count = 0;
 
-        for(Players player:PlayerScreen.GetAllPlayers())
+        for(Players player:playerScreen.GetAllPlayers())
         {
             count+=1;
 
@@ -77,9 +59,9 @@ public class RoundTwoScreen {
                     GameScreen quizScreen = new GameScreen();
                     quizScreen.SetSelectedTheme(theme);
                     quizScreen.GetQuestion(player.GetPlayerName().toUpperCase());
+                    quizScreen.setCurrentPlayer(playerScreen.GetSelectedPlayer());
                     quizScreen.ShowScreen();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                } catch (Exception ignored) {
                 }
             });
             frame.add(theme);
@@ -95,18 +77,68 @@ public class RoundTwoScreen {
         JButton btnReturnToMain = BusinessClass.SetButtons("Round1.png",
                 1500,5,400,100);
         btnReturnToMain.addActionListener(e -> {
-            BusinessClass.SetPlayersPoints(PlayerScreen.GetAllPlayers());
-            frame.dispose();
+            BusinessClass.SetPlayersPoints(playerScreen.GetAllPlayers());
+            frame.setVisible(false);
         });
         frame.add(btnReturnToMain);
 
-        ChangePlayer();
+        SetPlayer(frame,playerScreen);
+
         frame.setVisible(false);
         return frame;
     }
 
+    private void SetPlayer(JFrame pFrame, PlayerScreen pPlayerScreen)
+    {
+        try
+        {
+            //On supprime l'ancien joueur de l'écran pour ajouter celui sélectionné
+            pFrame.remove(btnPlayer);
+            pFrame.revalidate();
+            pFrame.repaint();
+        }
+        catch(Exception ex)
+        {
+            //Le bouton n'existe pas (possible lors de la 1ere itération)
+        }
+
+        btnPlayer = new JButton();
+        Players player = pPlayerScreen.GetSelectedPlayer();
+        String PlayerName = "Player";
+
+        if(player != null)
+            PlayerName = player.GetPlayerName();
+
+        btnPlayer = BusinessClass.SetButtons(String.format("Player/%s.png",PlayerName),
+                650,50,600,150);
+
+        btnPlayer.addActionListener(e -> {
+            pPlayerScreen.UpdatePoints();
+            pPlayerScreen.getPlayerFrame().setVisible(true);
+        });
+
+        pFrame.add(btnPlayer);
+    }
+
     public JFrame SetSecondRoundButtons() throws Exception {
+        PlayerScreen playerScreen = new PlayerScreen();
+
         frame = BusinessClass.SetBackGroundPanel();
+        frame.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                playerScreen.AddPlayers();
+                SetPlayer(frame,playerScreen);
+                frame.revalidate();
+                frame.repaint();
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+
+            }});
+
+
         int posx;
         int posy = INITIAL_POS_Y;
         int count = 0;
@@ -128,8 +160,6 @@ public class RoundTwoScreen {
             nextStep =(int)Math.ceil((double) listSize / 2);
         }
 
-
-
         for(String theme:themes)
         {
             count++;
@@ -141,6 +171,7 @@ public class RoundTwoScreen {
                     GameScreen quizScreen = new GameScreen();
                     quizScreen.SetSelectedTheme(buttonTheme);
                     quizScreen.GetQuestion(theme);
+                    quizScreen.setCurrentPlayer(playerScreen.GetSelectedPlayer());
                     quizScreen.ShowScreen();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
@@ -155,11 +186,11 @@ public class RoundTwoScreen {
             {
                 posy = INITIAL_POS_Y;
                 posx += 600;
-                nextStep += (int)Math.ceil((double) listSize / 3);;
+                nextStep += (int)Math.ceil((double) listSize / 3);
             } else if (listSize <= MAX_THEME_2_COLUMNS && (count == nextStep)) {
                 posy = INITIAL_POS_Y;
                 posx += 600;
-                nextStep += (int)Math.ceil((double) listSize / 2);;
+                nextStep += (int)Math.ceil((double) listSize / 2);
             }
         }
 
@@ -167,13 +198,16 @@ public class RoundTwoScreen {
         JButton btnReturnToMain2 = BusinessClass.SetButtons("Round2.png",
                 1500,5,400,100);
         btnReturnToMain2.addActionListener(e -> {
-            BusinessClass.SetPlayersPoints(PlayerScreen.GetAllPlayers());
+            BusinessClass.SetPlayersPoints(playerScreen.GetAllPlayers());
             frame.setVisible(false);
         });
         frame.add(btnReturnToMain2);
+        SetPlayer(frame,playerScreen);
 
-        ChangePlayer();
         frame.setVisible(false);
         return frame;
     }
+
+
+
 }

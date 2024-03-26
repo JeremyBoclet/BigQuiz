@@ -1,6 +1,7 @@
 package UI;
 
 import Business.BusinessClass;
+import Models.Players;
 import Models.Questions;
 
 import javax.swing.*;
@@ -11,12 +12,17 @@ import java.util.List;
 
 public class GameScreen {
     private List<Questions> questions;
-    private JFrame quizFrame = BusinessClass.SetBackGroundPanel();
+    private JFrame quizFrame;
     private List<Integer> questionIds;
     private JLabel questionLabel;
     private JLabel answerLabel;
     private JLabel lblPoint;
     private String currentTheme="";
+    private Players currentPlayer;
+    public void setCurrentPlayer(Players value)
+    {
+        currentPlayer = value;
+    }
 
     private JButton buttonPressed;
 
@@ -24,8 +30,6 @@ public class GameScreen {
         questions = pValue;
     }
 
-    public static void main(String[] args) {
-    }
      public void SetSelectedTheme(JButton pButtonPressed)
      {
          buttonPressed = pButtonPressed;
@@ -88,7 +92,6 @@ public class GameScreen {
 
     private void SetButtons()
     {
-
         JButton imgTheme = BusinessClass.SetButtons(currentTheme.concat(".png"),quizFrame.getWidth()/2 - 300,10,600,150);
         quizFrame.add(imgTheme);
 
@@ -104,8 +107,8 @@ public class GameScreen {
         {
             hideAnswer.setVisible(true);
 
-            PlayerScreen.GetSelectedPlayer().AddPoint(1);
-            lblPoint.setText("Point : ".concat(String.valueOf(PlayerScreen.GetSelectedPlayer().GetPlayerPoints())));
+            currentPlayer.AddPoint(1);
+            lblPoint.setText("Point : ".concat(String.valueOf(currentPlayer.GetPlayerPoints())));
 
             if(questionIds.isEmpty())
             {
@@ -143,7 +146,7 @@ public class GameScreen {
                 quizFrame.dispose());
         quizFrame.add(btnCancel);
 
-        lblPoint = new JLabel("Point : ".concat(String.valueOf(PlayerScreen.GetSelectedPlayer().GetPlayerPoints())));
+        lblPoint = new JLabel("Point : ".concat(String.valueOf(currentPlayer.GetPlayerPoints())));
 
         lblPoint.setBounds(
                 0,
@@ -156,9 +159,8 @@ public class GameScreen {
         lblPoint.setFont(new Font("Verdana",Font.PLAIN,40));
         lblPoint.setForeground(Color.WHITE);
         quizFrame.add(lblPoint);
-
-
     }
+
     private int GetNextQuestionId()
     {
         //On randomise l'ordre des questions

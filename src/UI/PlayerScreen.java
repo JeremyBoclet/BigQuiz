@@ -10,26 +10,28 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayerScreen {
-    private static JFrame PlayerFrame;
-    private static Players SelectedPlayer;
 
-    private static List<Players> AllPlayers = new ArrayList<>();
-    public static JFrame getPlayerFrame() {
+    private JFrame PlayerFrame;
+    private Players SelectedPlayer;
+
+    private List<Players> AllPlayers = new ArrayList<>();
+
+    public JFrame getPlayerFrame() {
         return PlayerFrame;
     }
 
-    public static Players GetSelectedPlayer()
+    public Players GetSelectedPlayer()
     {
         return SelectedPlayer;
     }
 
-    public static List<Players> GetAllPlayers()
+    public List<Players> GetAllPlayers()
     {
         return AllPlayers;
     }
 
-     //Ajout des joueurs à l'écran
-    public static void AddPlayers()
+    //Ajout des joueurs à l'écran
+    public void AddPlayers()
     {
         PlayerFrame = BusinessClass.SetBackGroundPanel();
         AllPlayers = BusinessClass.GetPlayers();
@@ -41,7 +43,6 @@ public class PlayerScreen {
 
             button.addActionListener(e -> {
                 SelectedPlayer = player;
-                RoundScreen.ChangePlayer();
                 PlayerFrame.dispose();
             });
 
@@ -58,29 +59,21 @@ public class PlayerScreen {
             }
             PlayerFrame.add(lbl);
             PlayerFrame.add(button);
-
-
         }
     }
 
     /// Mise à jour de l'affichage des points
-    public static void UpdatePoints()
-    {
-        for (Players player:AllPlayers) {
-            for(Component component: PlayerFrame.getContentPane().getComponents())
-            {
+    public void UpdatePoints() {
+        for (Players player : AllPlayers) {
+            for (Component component : PlayerFrame.getContentPane().getComponents()) {
                 //Pour chaque joueur on met a jour son label point
-                if(component instanceof JLabel)
-                {
-                    if (Objects.equals(component.getName(), "lbl" + player.GetPlayerName()))
-                    {
+                if (component instanceof JLabel) {
+                    if (Objects.equals(component.getName(), "lbl" + player.GetPlayerName())) {
                         ((JLabel) component).setText("Points : " + player.GetPlayerPoints());
                         break;
                     }
                 }
-
             }
         }
     }
-
 }
