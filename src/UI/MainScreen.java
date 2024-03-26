@@ -9,9 +9,6 @@ public class MainScreen {
 
     public static void main(String[] args) throws Exception {
         MainFrame = BusinessClass.SetBackGroundPanel();
-       /* RoundScreen.SetPlayers();
-        RoundOneFrame = RoundScreen.SetRoundButtons();*/
-
 
         SetButtons();
         MainFrame.setVisible(true);
@@ -20,11 +17,11 @@ public class MainScreen {
 
     //Ajoute les boutons de l'écran d'accueil
     private static void SetButtons() throws Exception {
-        RoundTwoScreen roundOneScreen = new RoundTwoScreen();
+        RoundScreen roundOneScreen = new RoundScreen();
         JFrame RoundOneFrame = roundOneScreen.SetRoundButtons();
 
-        RoundTwoScreen roundTwoScreen = new RoundTwoScreen();
-        JFrame RoundTwoFrame = roundTwoScreen.SetSecondRoundButtons();
+        RoundScreen roundScreen = new RoundScreen();
+        JFrame RoundTwoFrame = roundScreen.SetSecondRoundButtons();
 
         JButton btnQuit = BusinessClass.SetButtons("Quit.png",10,
                 MainFrame.getHeight() - 60,200,60);

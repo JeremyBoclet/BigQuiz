@@ -8,7 +8,7 @@ import java.awt.event.WindowFocusListener;
 import javax.swing.*;
 import java.util.List;
 
-public class RoundTwoScreen {
+public class RoundScreen {
     private final int THEME_WIDTH = 500;
     private final int THEME_HEIGHT= 110;
     private final int MAX_THEME_2_COLUMNS = 14;
