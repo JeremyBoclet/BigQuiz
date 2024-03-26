@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerScreen {
     private static JFrame PlayerFrame;
@@ -41,10 +42,11 @@ public class PlayerScreen {
             button.addActionListener(e -> {
                 SelectedPlayer = player;
                 RoundScreen.ChangePlayer();
-                PlayerFrame.setVisible(false);
+                PlayerFrame.dispose();
             });
 
             JLabel lbl = new JLabel("Point : ".concat(String.valueOf(player.GetPlayerPoints())));
+            lbl.setName("lbl" + player.GetPlayerName());
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("Verdana",Font.PLAIN,30));
             lbl.setBounds( x + (button.getWidth() /2) - 65,y+70,1000,100);
@@ -61,23 +63,21 @@ public class PlayerScreen {
         }
     }
 
-    public static void ShowPoint(){
-        int x = PlayerFrame.getWidth() / 2 - 200, y= 200;
-        for(Players player:AllPlayers)
-        {
-            JLabel lblPts = new JLabel("Points : ".concat(String.valueOf(player.GetPlayerPoints())));
-            lblPts.setBounds(x,y,1000,200);
-            lblPts.setFont(new Font("Verdana",Font.PLAIN,40));
-            lblPts.setForeground(Color.WHITE);
-
-            y += 150;
-            if (y >= 849)
+    public static void UpdatePoints()
+    {
+        for (Players player:AllPlayers) {
+            for(Component component: PlayerFrame.getContentPane().getComponents())
             {
-                x = PlayerFrame.getWidth() / 2 + 10;
-                y = 100;
-            }
+                if(component instanceof JLabel)
+                {
+                    if (Objects.equals(component.getName(), "lbl" + player.GetPlayerName()))
+                    {
+                        ((JLabel) component).setText("Points : " + player.GetPlayerPoints());
+                        break;
+                    }
+                }
 
-            PlayerFrame.add(lblPts);
+            }
         }
     }
 
