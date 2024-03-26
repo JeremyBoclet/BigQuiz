@@ -37,6 +37,20 @@ public class DataClass {
         }
     }
 
+    public static  List<String> GetTheme(String pRound) throws Exception {
+        List<String> Themes = new ArrayList<>();
+
+        Workbook book = new Workbook(new File("").getAbsolutePath().concat("/src/Questions.ods"));
+        Worksheet sheet = book.getWorksheets().get(pRound);
+        Cells cells = sheet.getCells();
+
+        for (int rowIndex = 1; rowIndex <= cells.getMaxDataRow(); rowIndex++) {
+            Themes.add(cells.get(rowIndex, 0).getStringValue());
+        }
+
+        return Themes;
+    }
+
     //Récupère la feuille excel contenant les questions du thème passé en paramètre
     public static List<Questions> GetQuestion(String pTheme) throws Exception {
         List<Questions> Questions = new ArrayList<>();

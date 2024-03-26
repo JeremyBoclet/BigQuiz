@@ -69,5 +69,10 @@ public class BusinessClass {
     public static List<Questions> GetQuestion(String pTheme) throws Exception {
         return DataClass.GetQuestion(pTheme);
     }
+
+    public static List<String> GetThemes(String pRound) throws Exception {
+        return DataClass.GetTheme(pRound);
+    }
+
 }
 

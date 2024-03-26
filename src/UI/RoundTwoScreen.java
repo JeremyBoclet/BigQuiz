@@ -2,30 +2,30 @@ package UI;
 
 import Business.BusinessClass;
 import Models.Players;
-import java.util.List;
 
 import javax.swing.*;
+import java.util.List;
 
-public class RoundScreen {
-    private static final int THEME_WIDTH = 500;
-    private static final int THEME_HEIGHT= 110;
-    private static final int MAX_THEME_2_COLUMNS = 14;
-    private static final int PLAYER_THEME_WIDTH = 600;
-    private static final int PLAYER_THEME_HEIGHT= 150;
-    private static final int INITIAL_POS_Y = 200;
+public class RoundTwoScreen {
+    private final int THEME_WIDTH = 500;
+    private final int THEME_HEIGHT= 110;
+    private final int MAX_THEME_2_COLUMNS = 14;
+    private final int PLAYER_THEME_WIDTH = 600;
+    private final int PLAYER_THEME_HEIGHT= 150;
+    private final int INITIAL_POS_Y = 200;
 
-    private static JButton btnPlayer;
-    private static JFrame frame;
+    private JButton btnPlayer;
+    private JFrame frame;
 
 
-    public static void SetPlayers()
+    public void SetPlayers(PlayerScreen playerScreen)
     {
-       PlayerScreen.AddPlayers();
+        playerScreen.AddPlayers();
     }
 
 
 
-     public static void ChangePlayer()
+    public void ChangePlayer()
     {
         try
         {
@@ -57,7 +57,7 @@ public class RoundScreen {
         frame.add(btnPlayer);
     }
 
-    public static JFrame SetRoundButtons()
+    public JFrame SetRoundButtons()
     {
         frame = BusinessClass.SetBackGroundPanel();
 

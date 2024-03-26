@@ -6,13 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainScreen {
-    private static JFrame RoundOneFrame;
+    private static JFrame  RoundOneFrame;
+    private static JFrame RoundTwoFrame;
     private static JFrame MainFrame;
 
     public static void main(String[] args) throws Exception {
         MainFrame = BusinessClass.SetBackGroundPanel();
         RoundScreen.SetPlayers();
-        RoundOneFrame = RoundScreen.SetFirstRoundButtons();
+        RoundOneFrame = RoundScreen.SetRoundButtons();
 
         SetButtons();
         MainFrame.setVisible(true);
@@ -42,8 +43,14 @@ public class MainScreen {
         JButton btnFirstRound = BusinessClass.SetButtons("Round1.png",
                 MainFrame.getWidth() / 2 - 325,85,650,150);
         btnFirstRound.addActionListener(e -> ShowRound(RoundOneFrame));
-
         MainFrame.add(btnFirstRound);
+
+        /*JButton btnSecondRound = BusinessClass.SetButtons("Round2.png",
+                MainFrame.getWidth() / 2 - 325,300,650,150);
+        btnSecondRound.addActionListener(e -> ShowRound(RoundTwoFrame));
+        MainFrame.add(btnSecondRound);*/
+
+
     }
 
     //Affichage de l'écran souhaité
