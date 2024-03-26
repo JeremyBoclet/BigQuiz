@@ -3,10 +3,12 @@ package UI;
 import Business.BusinessClass;
 import Models.Players;
 
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import javax.swing.*;
 import java.util.List;
+import java.util.Objects;
 
 public class RoundScreen {
     private final int THEME_WIDTH = 500;
@@ -16,7 +18,7 @@ public class RoundScreen {
     private final int PLAYER_THEME_HEIGHT= 150;
     private final int INITIAL_POS_Y = 200;
     private JButton btnPlayer;
-
+    private JLabel lblPlayerPts;
     private JFrame frame;
 
     public static void main(String[] args) {
@@ -31,9 +33,19 @@ public class RoundScreen {
         frame.addWindowFocusListener(new WindowFocusListener() {
                                              @Override
                                              public void windowGainedFocus(WindowEvent e) {
-                                                 //Permet de recupérer les bons points
-                                                 playerScreen.AddPlayers();
-                                                 //Met le bon joueur en avant
+                                                 if (playerScreen.GetSelectedPlayer() != null)
+                                                 {
+                                                     for(Players player:playerScreen.GetAllPlayers())
+                                                     {
+                                                         if(Objects.equals(player.GetPlayerName(), playerScreen.GetSelectedPlayer().GetPlayerName()))
+                                                         {
+                                                             player.SetPoint(playerScreen.GetSelectedPlayer().GetPlayerPoints());
+                                                             break;
+                                                         }
+                                                     }
+                                                 }
+                                                 //playerScreen.AddPlayers();
+
                                                  SetPlayer(frame,playerScreen);
                                                  frame.revalidate();
                                                  frame.repaint();
@@ -88,46 +100,26 @@ public class RoundScreen {
         return frame;
     }
 
-    private void SetPlayer(JFrame pFrame, PlayerScreen pPlayerScreen)
-    {
-        try
-        {
-            //On supprime l'ancien joueur de l'écran pour ajouter celui sélectionné
-            pFrame.remove(btnPlayer);
-            pFrame.revalidate();
-            pFrame.repaint();
-        }
-        catch(Exception ex)
-        {
-            //Le bouton n'existe pas (possible lors de la 1ere itération)
-        }
-
-        btnPlayer = new JButton();
-        Players player = pPlayerScreen.GetSelectedPlayer();
-        String PlayerName = "Player";
-
-        if(player != null)
-            PlayerName = player.GetPlayerName();
-
-        btnPlayer = BusinessClass.SetButtons(String.format("Player/%s.png",PlayerName),
-                650,50,600,150);
-
-        btnPlayer.addActionListener(e -> {
-            pPlayerScreen.UpdatePoints();
-            pPlayerScreen.getPlayerFrame().setVisible(true);
-        });
-
-        pFrame.add(btnPlayer);
-    }
-
-    public JFrame SetSecondRoundButtons() throws Exception {
+      public JFrame SetSecondRoundButtons() throws Exception {
         PlayerScreen playerScreen = new PlayerScreen();
+        playerScreen.AddPlayers();
 
         frame = BusinessClass.SetBackGroundPanel();
         frame.addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowGainedFocus(WindowEvent e) {
-                playerScreen.AddPlayers();
+                if (playerScreen.GetSelectedPlayer() != null)
+                {
+                    for(Players player:playerScreen.GetAllPlayers())
+                    {
+                        if(Objects.equals(player.GetPlayerName(), playerScreen.GetSelectedPlayer().GetPlayerName()))
+                        {
+                            player.SetPoint(playerScreen.GetSelectedPlayer().GetPlayerPoints());
+                            break;
+                        }
+                    }
+                }
+                //playerScreen.AddPlayers();
                 SetPlayer(frame,playerScreen);
                 frame.revalidate();
                 frame.repaint();
@@ -147,7 +139,6 @@ public class RoundScreen {
         int listSize = themes.size();
 
         int nextStep;
-
         //S'il y a plus de 12 thèmes alors on passe sur 3 colonnes
         if(listSize > MAX_THEME_2_COLUMNS)
         {
@@ -208,6 +199,49 @@ public class RoundScreen {
         return frame;
     }
 
+    private void SetPlayer(JFrame pFrame, PlayerScreen pPlayerScreen)
+    {
+        try
+        {
+            //On supprime l'ancien joueur de l'écran pour ajouter celui sélectionné
+            pFrame.remove(btnPlayer);
+            pFrame.remove(lblPlayerPts);
+            pFrame.revalidate();
+            pFrame.repaint();
+        }
+        catch(Exception ex)
+        {
+            //Le bouton n'existe pas (possible lors de la 1ere itération)
+        }
 
+        btnPlayer = new JButton();
+        lblPlayerPts = new JLabel();
+
+        Players player = pPlayerScreen.GetSelectedPlayer();
+        String PlayerName = "Player";
+        int PlayerPoint = 0;
+
+        if(player != null) {
+            PlayerName = player.GetPlayerName();
+            PlayerPoint = player.GetPlayerPoints();
+        }
+
+        lblPlayerPts.setText("Points : "+ PlayerPoint);
+        lblPlayerPts.setForeground(Color.WHITE);
+        lblPlayerPts.setFont(new Font("Verdana",Font.PLAIN,40));
+        lblPlayerPts.setBounds(840, 0,800,60);
+
+        pFrame.add(lblPlayerPts);
+
+        btnPlayer = BusinessClass.SetButtons(String.format("Player/%s.png",PlayerName),
+                650,50,600,150);
+
+        btnPlayer.addActionListener(e -> {
+            pPlayerScreen.UpdatePoints();
+            pPlayerScreen.getPlayerFrame().setVisible(true);
+        });
+
+        pFrame.add(btnPlayer);
+    }
 
 }
