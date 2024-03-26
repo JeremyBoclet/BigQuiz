@@ -68,7 +68,7 @@ public class GameScreen {
         questionLabel = new JLabel(("<html><body style='text-align: center'>".concat(questions.get(nextQuestionID).GetQuestion().concat("</html>")).replace("#","<br>")));
         questionLabel.setBounds(0,50,quizFrame.getWidth(),quizFrame.getHeight()/2);
         questionLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
-        questionLabel.setFont(new Font("Verdana",Font.PLAIN,70));
+        questionLabel.setFont(new Font("Verdana",Font.PLAIN,60));
         questionLabel.setForeground(Color.WHITE);
 
         quizFrame.add(questionLabel);
@@ -78,7 +78,7 @@ public class GameScreen {
         answerLabel.setBounds(0,570,quizFrame.getWidth(),quizFrame.getHeight()/2);
         answerLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         answerLabel.setFont(new Font("Verdana",Font.PLAIN,70));
-        answerLabel.setForeground(Color.WHITE);
+        answerLabel.setForeground(Color.YELLOW);
 
         quizFrame.add(answerLabel);
 
@@ -140,9 +140,7 @@ public class GameScreen {
                 20,
                 quizFrame.getHeight() - 65,200,65);
         btnCancel.addActionListener(e ->
-        {
-            quizFrame.dispose();
-        });
+                quizFrame.dispose());
         quizFrame.add(btnCancel);
 
         lblPoint = new JLabel("Point : ".concat(String.valueOf(PlayerScreen.GetSelectedPlayer().GetPlayerPoints())));
@@ -163,6 +161,7 @@ public class GameScreen {
     }
     private int GetNextQuestionId()
     {
+        //On randomise l'ordre des questions
         int randomIndex = (int) Math.floor(Math.random() * questionIds.size());
         int newQuestionId = (questionIds.get(randomIndex));
         questionIds.remove(randomIndex);

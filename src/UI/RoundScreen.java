@@ -4,7 +4,6 @@ import Business.BusinessClass;
 import Models.Players;
 
 import javax.swing.*;
-import java.util.Locale;
 
 public class RoundScreen {
     private static JButton btnPlayer;
@@ -40,6 +39,7 @@ public class RoundScreen {
                 650,50,600,150);
 
         btnPlayer.addActionListener(e -> {
+            PlayerScreen.UpdatePoints();
             PlayerScreen.getPlayerFrame().setVisible(true);
             //PlayerScreen.ShowPoint();
 
